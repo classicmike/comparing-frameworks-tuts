@@ -5,9 +5,53 @@ var Contacts = Backbone.Collection.extend({
     url: '/api/contacts'
 });
 
+// ActionsView
+// ContactsListView
+// ContactsItemView
+
+
+var ContactsListView = Backbone.View.extend({
+    tagName: 'ul',
+
+    render: function(){
+        this.collection.forEach(function(model){
+            this.$el.append((new ContactsItemView({model: model})).render().el)
+        }, this);
+        return this;
+    }
+});
+
+var ContactsItemView = Backbone.View.extend({
+    tagName: 'li',
+    events: {
+        'click a': 'handleClick'
+    },
+    template: _.template($('#ContactsItemViewTemplate').html()),
+    render: function(){
+        this.el.innerHTML = this.template(this.model.toJSON());
+
+        return this;
+    },
+    handleClick: function(evt){
+        evt.preventDefault();
+        Backbone.history.navigate('contacts/' + this.model.get('id'), { trigger: true });
+    }
+});
+
+var ActionsView = Backbone.View.extend({
+    className: 'actions',
+    template: '<a href="/contacts/new">New Contact</a>',
+    render: function(){
+        this.el.innerHTML = this.template;
+        return this;
+    }
+});
+
+
 var Router = Backbone.Router.extend({
     initialize: function(options){
         this.contacts = options.contacts;
+        this.el = $('#app');
     },
     routes: {
         '': 'main',
@@ -19,7 +63,9 @@ var Router = Backbone.Router.extend({
         Backbone.history.navigate('contacts', { trigger: true });
     },
     displayList: function(){
-        console.log(this.contacts.pluck('firstName'));
+        this.el.empty()
+            .append(new ActionsView().render().el)
+            .append(new ContactsListView({ collection: this.contacts }).render().el);
     },
     displayForm: function(){
         console.log('form');
