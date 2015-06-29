@@ -17,6 +17,45 @@
     <a href="/contacts/<%= id %>"><%= firstName %> <%= lastName %> <span><%= email %></span></a>
 </script>
 
+<script type="text/template" id="ContactViewTemplate">
+    <h2><%= firstName %> <%= lastName %></h2>
+    <p>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" id="firstName" class="firstName" value="<%= firstName %>" />
+    </p>
+    <p>
+        <label for="lastName">Last Name: </label>
+        <input type="text" id="lastName" class="lastName" name="lastName" value="<%= lastName %>" />
+    </p>
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" id="email" class="email" name="email" value="<%= email %>" />
+    </p>
+    <p>
+        <button class="update">Update</button>
+        <button class="delete">Delete</button>
+    </p>
+</script>
+
+<script type="text/template" id="NewContactViewTemplate">
+    <h2>New Contact</h2>
+    <p>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName"class="firstName" />
+    </p>
+    <p>
+        <label for="lastName">Last Name: </label>
+        <input type="text" class="lastName" name="lastName" />
+    </p>
+    <p>
+        <label for="email">Email: </label>
+        <input type="text" class="email" name="email" />
+    </p>
+    <p>
+        <button>Add Create</button>
+    </p>
+</script>
+
 <script src="/lib/jquery/dist/jquery.min.js"> </script>
 <script src="/lib/underscore/underscore.js"> </script>
 <script src="/lib/backbone/backbone.js"> </script>
